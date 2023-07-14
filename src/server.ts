@@ -1,12 +1,10 @@
-import express from 'express'
+import express from 'express';
 
-const app = express()
-const port = 3335
+const app = express();
+const port = 3335;
 
-app.get('/', (req, res) => {
-  return res.json({ message: 'Hello World' })
-})
+app.get('/', (req, res) => res.json({ message: 'Hello World' }));
 
 app.listen(port, () => {
-  console.log(`server on http://localhost:${port}`)
-})
+  console.log(`server on http://localhost:${port}`);
+});
