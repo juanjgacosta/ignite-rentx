@@ -6,7 +6,7 @@ import { CreateSpecificationService } from '../modules/cars/services/CreateSpeci
 const specificationsRoutes = Router();
 const specificationsRepository = new SpecificationsRepository();
 
-specificationsRoutes.post('/', (req,  res) => {
+specificationsRoutes.post('/', (req, res) => {
   const { name, description } = req.body;
 
   const createSpecificationService = new CreateSpecificationService(
