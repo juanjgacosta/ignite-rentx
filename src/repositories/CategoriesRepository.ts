@@ -22,7 +22,7 @@ class CategoriesRepository {
     });
 
     this.categories.push(category);
-    console.log(category);
+    console.log('CategoriesRepository: ', category);
   }
 
   list(): Category[] {
