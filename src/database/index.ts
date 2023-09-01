@@ -11,6 +11,11 @@ const dataSource = new DataSource({
   database: 'rentx',
 });
 
-dataSource.initialize().then(async () => {
-  console.log('Database connection ok');
-});
+dataSource
+  .initialize()
+  .then(async () => {
+    console.log('Database connection ok');
+  })
+  .catch((err) => {
+    console.error('Database error connection', err);
+  });
