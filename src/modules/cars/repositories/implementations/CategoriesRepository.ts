@@ -9,7 +9,7 @@ import {
 class CategoriesRepository implements ICategoriesRepository {
   private repository: Repository<Category>;
 
-  private static INSTANCE: CategoriesRepository;
+  // private static INSTANCE: CategoriesRepository;
 
   constructor() {
     this.repository = getRepository(Category);
@@ -21,7 +21,6 @@ class CategoriesRepository implements ICategoriesRepository {
       name,
     });
 
-    // console.log('CategoriesRepository: ', category);
     await this.repository.save(category);
   }
 
