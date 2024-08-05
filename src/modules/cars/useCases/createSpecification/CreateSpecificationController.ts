@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 
 import { CreateCategoryUseCase } from '../createCategory/CreateCategoryUseCase';
 
 class CreateSpecificationController {
-  constructor(private createSpecificationUseCase: CreateCategoryUseCase) {}
-
-  handle(req: Request, res: Response): Response {
+  async handle(req: Request, res: Response): Promise<Response> {
     const { name, description } = req.body;
 
-    this.createSpecificationUseCase.execute({ name, description });
+    const createSpecificationUseCase = container.resolve(CreateCategoryUseCase);
+    await createSpecificationUseCase.execute({ name, description });
 
     return res.status(201).send();
   }
