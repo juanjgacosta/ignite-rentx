@@ -11,6 +11,7 @@ class UsersRepository implements IUsersRepository {
     this.repository = getRepository(User);
   }
 
+  // Method for creating a user
   async create({
     name,
     password,
@@ -25,6 +26,12 @@ class UsersRepository implements IUsersRepository {
     });
 
     await this.repository.save(user);
+  }
+
+  // Method to search for user by email
+  async findByEmail(email: string): Promise<User> {
+    const user = await this.repository.findOne({ email });
+    return user;
   }
 }
 
