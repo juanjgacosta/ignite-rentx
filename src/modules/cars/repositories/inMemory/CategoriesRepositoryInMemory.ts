@@ -10,7 +10,7 @@ class CategoriesRepositoryInMemory implements ICategoriesRepository {
   async create({ name, description }: ICreateCategoryDTO): Promise<void> {
     const category = new Category();
 
-    Object.assign(Category, {
+    Object.assign(category, {
       name,
       description,
     });
