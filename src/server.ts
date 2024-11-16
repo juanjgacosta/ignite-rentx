@@ -19,6 +19,10 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(router);
 
+app.get('/healthcheck', (req, res) => {
+  res.status(200).json({ message: 'ok' });
+});
+
 app.use(
   (err: Error, request: Request, response: Response, next: NextFunction) => {
     if (err instanceof AppError) {
