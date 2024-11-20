@@ -8,7 +8,7 @@
 
 ### feature/docker
 
-- Implemented basic Docker configuration to run project from container.
+- Basic Docker configuration to run project from container implemented.
 
 ### feature/typeorm.0.2.31
 
@@ -17,6 +17,10 @@
 ### feature/typeorm.0.3.17
 
 - TypeORM setup in version 0.3.17. (test)
+
+### feature/jest
+
+- Dependency inversion, test configuration and import optimization implemented.
 
 ### master
 
