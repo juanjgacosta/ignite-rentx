@@ -1,7 +1,8 @@
 import { getRepository, Repository } from 'typeorm';
 
+import { ICreateSpecificationDTO } from '@modules/cars/dtos/ICreateSpecificationDTO';
 import {
-  ICreateSpecificationDTO,
+  // ICreateSpecificationDTO,
   ISpecificationsRepository,
 } from '@modules/cars/repositories/ISpecificationsRepository';
 
