@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import 'express-async-errors';
 import swaggerUi from 'swagger-ui-express';
 
@@ -25,20 +25,18 @@ app.get('/healthcheck', (req, res) => {
   res.status(200).json({ message: 'ok' });
 });
 
-app.use(
-  (err: Error, request: Request, response: Response, next: NextFunction) => {
-    if (err instanceof AppError) {
-      return response.status(err.statusCode).json({
-        message: err.message,
-      });
-    }
-
-    return response.status(500).json({
-      status: 'error',
-      message: `Internal server error - ${err.message}`,
+app.use((err: Error, request: Request, response: Response) => {
+  if (err instanceof AppError) {
+    return response.status(err.statusCode).json({
+      message: err.message,
     });
-  },
-);
+  }
+
+  return response.status(500).json({
+    status: 'error',
+    message: `Internal server error - ${err.message}`,
+  });
+});
 
 app.listen(port, () => {
   console.log(`server on http://localhost:${port}`);
