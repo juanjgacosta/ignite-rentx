@@ -20,6 +20,7 @@ class CreateCarUseCase {
     @inject('CarsRepository')
     private carsRepository: ICarsRepository,
   ) {}
+
   async execute({
     name,
     description,
