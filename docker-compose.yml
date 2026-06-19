@@ -1,10 +1,10 @@
-version: '3.7'
+version: "3.7"
 
 services:
   database:
     image: postgres
     container_name: database_ignite
-    restart: always
+    restart: "no"
     ports:
       - 5432:5432
     environment:
@@ -17,7 +17,7 @@ services:
   app:
     build: .
     container_name: rentx
-    restart: always
+    restart: "no"
     ports:
       - 3335:3335
       - 9229:9229 # porta para debug

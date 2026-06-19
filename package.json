@@ -5,10 +5,13 @@
   "repository": "git@github.com:juanjacosta/ignite-rentx.git",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
+    "dev": "ts-node-dev -r tsconfig-paths/register --inspect=0.0.0.0:9229 --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli",
+    "dev:migration:create": "typeorm migration:create $npm_config_name",
+    "dev:migration:run": "yarn typeorm migration:run",
     "test": "jest",
-    "build": "rm -rf dist && tsc"
+    "build": "rm -rf dist && tsc",
+    "seed:admin": "ts-node-dev src/shared/infra/typeorm/seed/admin.ts"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -20,7 +23,7 @@
     "pg": "8.5.1",
     "reflect-metadata": "0.1.13",
     "swagger-ui-express": "^5.0.0",
-    "tsyringe": "4.4.0",
+    "tsyringe": "4.10.0",
     "typeorm": "0.2.31",
     "uuid": "^9.0.0"
   },
