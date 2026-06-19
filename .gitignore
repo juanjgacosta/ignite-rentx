@@ -131,3 +131,15 @@ dist
 
 # OSx
 .DS_Store
+
+# Local uploaded files
+tmp/*
+!tmp/.gitkeep
+
+!tmp/avatar/
+tmp/avatar/*
+!tmp/avatar/.gitkeep
+
+!tmp/cars/
+tmp/cars/*
+!tmp/cars/.gitkeep
