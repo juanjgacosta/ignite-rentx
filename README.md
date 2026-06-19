@@ -1,80 +1,254 @@
-# Ignite rentx
+ <h1 align="center">RentX API</h1>
 
-# Cadastro de carro
+  <p align="center">
+  RESTful car rental API built with Node.js, TypeScript, Express, TypeORM and PostgreSQL.
+  </p>
 
-**RF**
-Deve ser possível cadastrar um novo carro.
+  <p align="center">
+    <img src="https://img.shields.io/badge/node-18-green" />
+    <img src="https://img.shields.io/badge/typescript-5.x-blue" />
+    <img src="https://img.shields.io/badge/database-postgresql-blue" />
+    <img src="https://img.shields.io/badge/tested_with-jest-blue" />
+    <img src="https://img.shields.io/badge/architecture-clean--architecture-orange" />
+  </p>
 
-**RN**
-Não deve ser possível cadastrar um carro com uma placa já existente.
-O carro deve ser cadastrado, por padrão, como disponível.
-O usuário responsável pelo cadastro deve ser um usuário administrador.
+## Table of Contents
 
-# Listagem de carros
+- [Table of Contents](#table-of-contents)
+- [About the project](#about-the-project)
+- [Tech Stack](#tech-stack)
+- [Project Setup](#project-setup)
+  - [1. Use the correct Node.js version](#1-use-the-correct-nodejs-version)
+  - [2. Install dependencies](#2-install-dependencies)
+  - [3. Start PostgreSQL](#3-start-postgresql)
+  - [4. Run migrations](#4-run-migrations)
+  - [5. Start the API](#5-start-the-api)
+- [Docket Setup](#docket-setup)
+- [Database Migrations](#database-migrations)
+  - [Example](#example)
+- [Admin User Seed](#admin-user-seed)
+- [API Documentation](#api-documentation)
+- [Main Features](#main-features)
+  - [Accounts](#accounts)
+  - [Cars](#cars)
+  - [Categories](#categories)
+  - [Specifications](#specifications)
+- [File Uploads](#file-uploads)
+- [Testing](#testing)
+- [Business Requirements](#business-requirements)
 
-**RF**
-Deve ser possível listar todos os carros disponíveis.
-Deve ser possível listar todos os carros pelo nomo da categoria.
-Deve ser possível listar todos os carros pelo nomo da marca.
-Deve ser possível listar todos os carros pelo nomo do carro.
+## About the project
 
-**RN**
-O usuário não precisa estar logado no sistema.
+RentX is a REST API for managing a car rental platform.
 
-# Cadastro de Especificação no carro
+The project was developed as part of the Rocketseat Ignite Node.js track and follows Clean
+Architecture principles, separating business rules from infrastructure concerns such as HTTP, database
+access, file uploads and dependency injection.
 
-**RF**
-Deve ser possível cadastrar uma especificação para um carro.
+Main responsibilities:
 
-**RN**
-Não deve ser possível cadastrar uma especificação para um carro não cadastrado.
-Não deve ser possível cadastrar uma especificação já existente para o mesmo carro.
-O usuário responsável pelo cadastro deve ser um usuário administrador.
+- User creation and authentication
+- Admin-protected category, specification and car management
+- Car availability listing
+- Car image uploads
+- User avatar uploads
+- Category import through CSV files
+- PostgreSQL persistence with TypeORM migrations
 
-# Cadastro de imagens do carro
+## Tech Stack
 
-**RF**
-Deve ser possível cadastrar a imagem do carro.
+- Node.js
+- TypeScript
+- Express
+- TypeORM 0.2.x
+- PostgreSQL
+- Docker
+- Jest
+- tsyringe
+- multer
+- bcryptjs
+- jsonwebtoken
+- Swagger UI
 
-**RNF**
-Utilizar o multer para upload dos arquivos.
+## Project Setup
 
-**RN**
-O usuário deve poder cadastrar mais de uma imagem para o mesmo carro.
-O usuário responsável pelo cadastro deve ser um usuário administrador.
+### 1. Use the correct Node.js version
 
-# Aluguel de carro
+```bash
+nvm use
+```
 
-**RF**
-Deve ser possível cadastrar um aluguel.
+### 2. Install dependencies
 
-**RN**
-O aluguel deve ter duração mínima de 24 horas.
-No deve ser possível cadastrar um novo aluguel caso já exista um aberto para o mesmo usuário.
-No deve ser possível cadastrar um novo aluguel caso já exista um aberto para o mesmo carro.
+```
+npm install
+```
 
-## Branchs
+### 3. Start PostgreSQL
 
-### develop
+You can use Docker Compose:
 
-- development branch
+```bash
+docker compose up -d database
+```
 
-### feature/docker
+### 4. Run migrations
 
-- Basic Docker configuration to run project from container implemented.
+```bash
+yarn dev:migration:run
+```
 
-### feature/typeorm.0.2.31
+### 5. Start the API
 
-- TypeORM setup in version 0.2.31. (Ignite Project version)
+```bash
+npm run dev
+```
 
-### feature/typeorm.0.3.17
+The API runs at:
 
-- TypeORM setup in version 0.3.17. (test)
+```
+http://localhost:3335
+```
 
-### feature/jest
+Health check:
 
-- Dependency inversion, test configuration and import optimization implemented.
+```
+GET http://localhost:3335/healthcheck
+```
 
-### master
+## Docket Setup
 
-- Master branch of the project
+```bash
+docker compose up
+```
+
+Services:
+
+| Service  | Description           | Port |
+| -------- | --------------------- | ---- |
+| app      | Node.js API container | 3335 |
+| database | PostgreSQL database   | 5432 |
+
+The database credentials are defined in `docker-compose.yml` and `ormconfig.json`.
+
+## Database Migrations
+
+| Action                 | <div align="center">Command </div>                  |
+| ---------------------- | --------------------------------------------------- |
+| Create a new migration | `npm run dev:migration:create --name=MigrationName` |
+| Run migrations         | `npm run dev:migration:run`                         |
+| Revert last migration  | `npm run dev:migration:revert`                      |
+
+### Example
+
+Creating and applying a migration named `AlterUserAddAvatar`:
+
+```bash
+npm run dev:migration:create --name=AlterUserAddAvatar
+npm run dev:migration:run
+```
+
+Migration files are stored in:
+
+src/shared/infra/typeorm/migrations
+
+## Admin User Seed
+
+To create the default admin user:
+
+```bash
+npm run seed:admin
+```
+
+Default credentials:
+
+email: admin@rentx.com.br
+password: admin
+
+## API Documentation
+
+Swagger documentation is available at:
+
+```
+http://localhost:3335/api-docs
+```
+
+The Swagger source file is located at:
+
+src/swagger.json
+
+## Main Features
+
+### Accounts
+
+- Create users
+- Authenticate users
+- Upload and replace user avatar
+- Protect routes with JWT authentication
+- Restrict selected routes to admin users
+
+### Cars
+
+- Create cars
+- List available cars
+- Filter available cars by brand, name or category
+- Add specifications to cars
+- Upload multiple images for a car
+
+### Categories
+
+- Create categories
+- List categories
+- Import categories from CSV files
+
+### Specifications
+
+- Create specifications
+- List specifications
+
+## File Uploads
+
+The project uses multer for local file uploads.
+
+Upload destinations:
+
+| Path       | Purpose                                 |
+| ---------- | --------------------------------------- |
+| tmp/avatar | User avatar uploads                     |
+| tmp/cars   | Car image uploads                       |
+| tmp        | Temporary CSV files for category import |
+
+Uploaded runtime files should not be committed to Git. Keep only placeholder files such as .gitkeep when needed to preserve the folder structure.
+
+## Testing
+
+The project uses Jest with ts-jest.
+
+Run tests:
+
+```bash
+npm run test
+```
+
+Current test coverage focuses on use cases and business rules using in-memory repositories.
+
+Test files follow the pattern:
+
+\*.spec.ts
+
+Examples:
+
+- CreateCategoryUseCase.spec.ts
+- CreateCarUseCase.spec.ts
+- CreateCarSpecificationUseCase.spec.ts
+- ListAvailableCarsUseCase.spec.ts
+- AuthenticateUserUseCase.spec.ts
+
+## Business Requirements
+
+The original functional and business rules are documented in:
+
+docs/requirements.md
+
+Some requirements describe planned behavior that may not be fully implemented yet, such as the car
+rental flow.
