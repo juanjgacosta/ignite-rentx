@@ -4,16 +4,16 @@ import { v4 as uuidV4 } from 'uuid';
 @Entity('cars_image')
 class CarImage {
   @PrimaryColumn()
-  id: string;
+  id!: string;
 
   @Column()
-  car_id: string;
+  car_id!: string;
 
   @Column()
-  image_name: string;
+  image_name!: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at!: Date;
 
   constructor() {
     if (!this.id) {
