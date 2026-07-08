@@ -178,6 +178,7 @@ yarn seed:admin
 Default credentials:
 
 email: admin@rentx.com.br
+
 password: admin
 
 ## API Documentation
