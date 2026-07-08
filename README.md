@@ -96,7 +96,7 @@ nvm use
 2. Install dependencies
 
 ```
-npm install
+yarn
 ```
 
 3. Start PostgreSQL
@@ -116,7 +116,7 @@ yarn dev:migration:run
 5. Start the API
 
 ```bash
-npm run dev
+yarn dev
 ```
 
 The API runs at:
@@ -148,19 +148,19 @@ The database credentials are defined in `docker-compose.yml` and `ormconfig.json
 
 ## Database Migrations
 
-| Action                 | <div align="center">Command </div>                  |
-| ---------------------- | --------------------------------------------------- |
-| Create a new migration | `npm run dev:migration:create --name=MigrationName` |
-| Run migrations         | `npm run dev:migration:run`                         |
-| Revert last migration  | `npm run dev:migration:revert`                      |
+| Action                 | <div align="center">Command </div>               |
+| ---------------------- | ------------------------------------------------ |
+| Create a new migration | `yarn dev:migration:create --name=MigrationName` |
+| Run migrations         | `yarn dev:migration:run`                         |
+| Revert last migration  | `yarn dev:migration:revert`                      |
 
 Example:
 
 Creating and applying a migration named `AlterUserAddAvatar`:
 
 ```bash
-npm run dev:migration:create --name=AlterUserAddAvatar
-npm run dev:migration:run
+yarn dev:migration:create --name=AlterUserAddAvatar
+yarn dev:migration:run
 ```
 
 Migration files are stored in:
@@ -172,7 +172,7 @@ src/shared/infra/typeorm/migrations
 To create the default admin user:
 
 ```bash
-npm run seed:admin
+yarn seed:admin
 ```
 
 Default credentials:
@@ -249,7 +249,7 @@ The project uses Jest with ts-jest.
 Run tests:
 
 ```bash
-npm run test
+yarn test
 ```
 
 Current test coverage focuses on use cases and business rules using in-memory repositories.
