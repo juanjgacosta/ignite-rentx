@@ -17,15 +17,10 @@
 - [Table of Contents](#table-of-contents)
 - [About the project](#about-the-project)
 - [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
 - [Project Setup](#project-setup)
-  - [1. Use the correct Node.js version](#1-use-the-correct-nodejs-version)
-  - [2. Install dependencies](#2-install-dependencies)
-  - [3. Start PostgreSQL](#3-start-postgresql)
-  - [4. Run migrations](#4-run-migrations)
-  - [5. Start the API](#5-start-the-api)
-- [Docket Setup](#docket-setup)
+- [Docker Setup](#docker-setup)
 - [Database Migrations](#database-migrations)
-  - [Example](#example)
 - [Admin User Seed](#admin-user-seed)
 - [API Documentation](#api-documentation)
 - [Main Features](#main-features)
@@ -33,6 +28,7 @@
   - [Cars](#cars)
   - [Categories](#categories)
   - [Specifications](#specifications)
+  - [Rentals](#rentals)
 - [File Uploads](#file-uploads)
 - [Testing](#testing)
 - [Business Requirements](#business-requirements)
@@ -70,21 +66,40 @@ Main responsibilities:
 - jsonwebtoken
 - Swagger UI
 
+## Project Structure
+
+```text
+src/
+    modules/
+      accounts/   User creation, authentication and avatar upload
+      cars/       Categories, specifications, cars and car images
+      rentals/    Rental creation and rental business rules
+    shared/
+      container/  Dependency injection setup and shared providers
+      errors/     Application error handling
+      infra/
+        http/     Express server and routes
+        typeorm/  Database connection, migrations and seeds
+```
+
+The project follows a use-case oriented structure. Business rules live in useCases, while persistence
+details are isolated behind repository interfaces and TypeORM implementations.
+
 ## Project Setup
 
-### 1. Use the correct Node.js version
+1. Use the correct Node.js version
 
 ```bash
 nvm use
 ```
 
-### 2. Install dependencies
+2. Install dependencies
 
 ```
-npm install
+yarn
 ```
 
-### 3. Start PostgreSQL
+3. Start PostgreSQL
 
 You can use Docker Compose:
 
@@ -92,16 +107,16 @@ You can use Docker Compose:
 docker compose up -d database
 ```
 
-### 4. Run migrations
+4. Run migrations
 
 ```bash
 yarn dev:migration:run
 ```
 
-### 5. Start the API
+5. Start the API
 
 ```bash
-npm run dev
+yarn dev
 ```
 
 The API runs at:
@@ -116,7 +131,7 @@ Health check:
 GET http://localhost:3335/healthcheck
 ```
 
-## Docket Setup
+## Docker Setup
 
 ```bash
 docker compose up
@@ -133,19 +148,19 @@ The database credentials are defined in `docker-compose.yml` and `ormconfig.json
 
 ## Database Migrations
 
-| Action                 | <div align="center">Command </div>                  |
-| ---------------------- | --------------------------------------------------- |
-| Create a new migration | `npm run dev:migration:create --name=MigrationName` |
-| Run migrations         | `npm run dev:migration:run`                         |
-| Revert last migration  | `npm run dev:migration:revert`                      |
+| Action                 | <div align="center">Command </div>               |
+| ---------------------- | ------------------------------------------------ |
+| Create a new migration | `yarn dev:migration:create --name=MigrationName` |
+| Run migrations         | `yarn dev:migration:run`                         |
+| Revert last migration  | `yarn dev:migration:revert`                      |
 
-### Example
+Example:
 
 Creating and applying a migration named `AlterUserAddAvatar`:
 
 ```bash
-npm run dev:migration:create --name=AlterUserAddAvatar
-npm run dev:migration:run
+yarn dev:migration:create --name=AlterUserAddAvatar
+yarn dev:migration:run
 ```
 
 Migration files are stored in:
@@ -157,12 +172,13 @@ src/shared/infra/typeorm/migrations
 To create the default admin user:
 
 ```bash
-npm run seed:admin
+yarn seed:admin
 ```
 
 Default credentials:
 
 email: admin@rentx.com.br
+
 password: admin
 
 ## API Documentation
@@ -182,7 +198,7 @@ src/swagger.json
 ### Accounts
 
 - Create users
-- Authenticate users
+- Authenticate users with JWT
 - Upload and replace user avatar
 - Protect routes with JWT authentication
 - Restrict selected routes to admin users
@@ -206,6 +222,13 @@ src/swagger.json
 - Create specifications
 - List specifications
 
+### Rentals
+
+- Create rentals for authenticated users
+- Prevent rental creation when the car already has an open rental
+- Prevent users from creating more than one open rental
+- Enforce a minimum expected return duration of 24 hours
+
 ## File Uploads
 
 The project uses multer for local file uploads.
@@ -227,7 +250,7 @@ The project uses Jest with ts-jest.
 Run tests:
 
 ```bash
-npm run test
+yarn test
 ```
 
 Current test coverage focuses on use cases and business rules using in-memory repositories.
@@ -250,5 +273,4 @@ The original functional and business rules are documented in:
 
 docs/requirements.md
 
-Some requirements describe planned behavior that may not be fully implemented yet, such as the car
-rental flow.
+The current implementation covers accounts, authentication, categories, specifications, cars, car images and rental creation.
