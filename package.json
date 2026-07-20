@@ -10,7 +10,7 @@
     "dev:migration:create": "typeorm migration:create $npm_config_name",
     "dev:migration:run": "yarn typeorm migration:run",
     "dev:migration:revert": "yarn typeorm migration:revert",
-    "test": "jest",
+    "test": "NODE_ENV=test jest",
     "build": "rm -rf dist && tsc",
     "seed:admin": "ts-node-dev src/shared/infra/typeorm/seed/admin.ts"
   },
